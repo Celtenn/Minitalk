@@ -13,53 +13,42 @@ int	ft_atoi(char *str)
 		result += (str[i] - '0');
 		i++;
 	}
-	return (result * n);
+	return (result);
 }
 
-int	ft_strlen(char *str)
+void	ft_bit_sender(char f, int pid)
 {
-	int	i;
-
-	i = 0;
-	while (*str)
-	{
-		str++;
-		i++;
-	}
-	return (i);
-}
-
-void	ft_kill(int pid, char *str)
-{
-	int len;
 	int bit;
-	int i;
 
-	len = ft_strlen(str);
-	str[len] = '\n';
-	str[len + 1] = '\0';
-	i = 0;
-	while (str[i] != '\0')
-	{
-		bit = 7;
+	bit = 7;
 		while (bit > -1)
 		{
-			if ((str[i] >> bit) & 1)
+			if ((f >> bit) & 1)
 			{
 				kill(pid, SIGUSR2);
 			}
 			else
 				kill(pid, SIGUSR1);
 			bit--;
-			usleep(100);
+			usleep(400);
 		}
+}
+void	ft_kill(int pid, char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ft_bit_sender(str[i], pid);
 		i++;
 	}
+	ft_bit_sender('\n', pid);
 }
 
 int main(int argc, char **argv)
 {
-	int nbr;
+	int	nbr;
 	char *str;
 
 	if (argc == 3)

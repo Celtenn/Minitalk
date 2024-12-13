@@ -15,17 +15,17 @@ void	ft_putnbr(int n)
 	}
 }
 
-void	ft_server(int sinyal)
+void	ft_server(int sig)
 {
 	static int count;
 	static char len_bit;
 
-	if (sinyal == SIGUSR1)
+	if (sig == SIGUSR1)
 	{
 		len_bit = (len_bit << 1) | 0;
 		count++;
 	}
-	else if (sinyal == SIGUSR2)
+	else if (sig == SIGUSR2)
 	{
 		len_bit = (len_bit << 1) | 1;
 		count++;
@@ -40,13 +40,14 @@ void	ft_server(int sinyal)
 
 int main()
 {
-	int t;
+	int	t;
+
+	signal(SIGUSR2, ft_server);
+	signal(SIGUSR1, ft_server);
 	t = getpid();
 	ft_putnbr(t);
 	while (1)
 	{
-		signal(SIGUSR2, ft_server);
-		signal(SIGUSR1, ft_server);
 		pause();
 	}
 }
