@@ -1,6 +1,5 @@
 #include <signal.h>
 #include <unistd.h>
-#include <sys/types.h>
 int	ft_atoi(char *str)
 {
 	int	i;
@@ -60,7 +59,7 @@ void	ft_kill(int pid, char *str)
 
 int main(int argc, char **argv)
 {
-	pid_t nbr;
+	int nbr;
 	char *str;
 
 	if (argc == 3)
