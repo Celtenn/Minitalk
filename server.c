@@ -1,7 +1,6 @@
 #include <signal.h>
-#include <sys/types.h>
 #include <unistd.h>
-void	ft_putnbr(pid_t n)
+void	ft_putnbr(int n)
 {
 	char c;
 	if (n > 9)
@@ -41,7 +40,7 @@ void	ft_server(int sinyal)
 
 int main()
 {
-	pid_t t;
+	int t;
 	t = getpid();
 	ft_putnbr(t);
 	while (1)
