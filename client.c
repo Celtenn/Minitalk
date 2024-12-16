@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: idkahram <idkahram@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 20:36:05 by idkahram          #+#    #+#             */
+/*   Updated: 2024/12/17 00:43:59 by idkahram         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
 #include <unistd.h>
+
 int	ft_atoi(char *str)
 {
 	int	i;
@@ -7,7 +20,7 @@ int	ft_atoi(char *str)
 
 	i = 0;
 	result = 0;
-	while(str[i] >= '0' && str[i] <= '9' && str[i])
+	while (str[i] >= '0' && str[i] <= '9' && str[i])
 	{
 		result *= 10;
 		result += (str[i] - '0');
@@ -18,24 +31,25 @@ int	ft_atoi(char *str)
 
 void	ft_bit_sender(char f, int pid)
 {
-	int bit;
+	int	bit;
 
 	bit = 7;
-		while (bit > -1)
+	while (bit > -1)
+	{
+		if ((f >> bit) & 1)
 		{
-			if ((f >> bit) & 1)
-			{
-				kill(pid, SIGUSR2);
-			}
-			else
-				kill(pid, SIGUSR1);
-			bit--;
-			usleep(400);
+			kill(pid, SIGUSR2);
 		}
+		else
+			kill(pid, SIGUSR1);
+		bit--;
+		usleep(500);
+	}
 }
+
 void	ft_kill(int pid, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -46,10 +60,10 @@ void	ft_kill(int pid, char *str)
 	ft_bit_sender('\n', pid);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int	nbr;
-	char *str;
+	int		nbr;
+	char	*str;
 
 	if (argc == 3)
 	{

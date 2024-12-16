@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: idkahram <idkahram@student.42kocaeli.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 20:38:58 by idkahram          #+#    #+#             */
+/*   Updated: 2024/12/17 00:31:18 by idkahram         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
 #include <unistd.h>
+
 void	ft_putnbr(int n)
 {
-	char c;
+	char	c;
+
 	if (n > 9)
 	{
 		ft_putnbr(n / 10);
@@ -11,34 +25,37 @@ void	ft_putnbr(int n)
 	else
 	{
 		c = n + 48;
-		write(1, &c , 1);
+		write(1, &c, 1);
 	}
 }
 
 void	ft_server(int sig)
 {
-	static int count;
-	static char len_bit;
+	static int	count;
+	static int	result;
+	static int	number = 128;
 
-	if (sig == SIGUSR1)
+	if (sig == SIGUSR2)
 	{
-		len_bit = (len_bit << 1) | 0;
+		result = result + number;
+		number = number / 2;
 		count++;
 	}
-	else if (sig == SIGUSR2)
+	else if (sig == SIGUSR1)
 	{
-		len_bit = (len_bit << 1) | 1;
+		number = number / 2;
 		count++;
 	}
 	if (count == 8)
 	{
-		write(1, &len_bit, 1);
+		write(1, &result, 1);
 		count = 0;
-		len_bit = 0;
+		result = 0;
+		number = 128;
 	}
 }
 
-int main()
+int	main(void)
 {
 	int	t;
 
