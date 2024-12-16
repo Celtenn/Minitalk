@@ -31,25 +31,15 @@ void	ft_putnbr(int n)
 
 void	ft_server(int sig)
 {
-	static int	count;
 	static int	result;
 	static int	number = 128;
 
 	if (sig == SIGUSR2)
-	{
 		result = result + number;
-		number = number / 2;
-		count++;
-	}
-	else if (sig == SIGUSR1)
-	{
-		number = number / 2;
-		count++;
-	}
-	if (count == 8)
+	number = number / 2;
+	if (number == 0)
 	{
 		write(1, &result, 1);
-		count = 0;
 		result = 0;
 		number = 128;
 	}
