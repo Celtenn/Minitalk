@@ -6,7 +6,7 @@
 /*   By: idkahram <idkahram@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:36:05 by idkahram          #+#    #+#             */
-/*   Updated: 2024/12/17 00:43:59 by idkahram         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:59:36 by idkahram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	main(int argc, char **argv)
 	{
 		nbr = ft_atoi(argv[1]);
 		str = argv[2];
+		if (nbr <= 0)
+			return (-1);
 		ft_kill(nbr, str);
 	}
 }
